@@ -1,19 +1,19 @@
 <?php
 /*
- * Copyright 2016 Google
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright 2016 Google
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 namespace Lullabot\AMP;
 
@@ -34,12 +34,12 @@ use Lullabot\AMP\Utility\ActionTakenLine;
 use QueryPath\DOMQuery;
 
 /**
- * Class AMP
- * @package Lullabot\AMP
- *
- * This is the main end user facing class.
- * All validation and HTML fixing functionality is controlled from here
- */
+* Class AMP
+* @package Lullabot\AMP
+*
+* This is the main end user facing class.
+* All validation and HTML fixing functionality is controlled from here
+*/
 class AMP
 {
     const AMP_LINENUM_ATTRIBUTE = 'data-amp-library-linenum';
@@ -100,9 +100,9 @@ class AMP
     }
 
     /**
-     * @deprecated use getActionTaken
-     * @return array
-     */
+    * @deprecated use getActionTaken
+    * @return array
+    */
     public function getWarnings()
     {
         return $this->action_taken;
@@ -124,10 +124,10 @@ class AMP
     }
 
     /**
-     * AMP constructor.
-     *
-     * @see src/Spec/validator-generated.php
-     */
+    * AMP constructor.
+    *
+    * @see src/Spec/validator-generated.php
+    */
     public function __construct()
     {
         // The ParsedValidationRules object is expensive to create. So we maintain a global singleton
@@ -139,14 +139,14 @@ class AMP
     }
 
     /**
-     * Calling this function "clears" the state of the AMP object.
-     * It then "loads" up new HTML, that is ready for conversion with
-     * AMP::convertToAmpHtml()
-     *
-     * @param string $html
-     * @param array $options
-     * @throws \Exception
-     */
+    * Calling this function "clears" the state of the AMP object.
+    * It then "loads" up new HTML, that is ready for conversion with
+    * AMP::convertToAmpHtml()
+    *
+    * @param string $html
+    * @param array $options
+    * @throws \Exception
+    */
     public function loadHtml($html, $options = [])
     {
         $this->clear();
@@ -214,11 +214,11 @@ class AMP
     }
 
     /**
-     * Calling this function "clears" the state of the AMP object and puts it into default mode
-     * Call this function when you don't want anything remaining in the AMP Object.
-     *
-     * Calling this function is optional.
-     */
+    * Calling this function "clears" the state of the AMP object and puts it into default mode
+    * Call this function when you don't want anything remaining in the AMP Object.
+    *
+    * Calling this function is optional.
+    */
     public function clear()
     {
         $this->input_html = '';
@@ -234,15 +234,15 @@ class AMP
     }
 
     /**
-     * An HTML fragment is anything that can occur within a _body_ tag
-     * This method makes an HTML fragment a full HTML document
-     *
-     * We need to do this to avoid encoding issues.
-     * see https://github.com/technosophos/querypath/issues/94#issuecomment-8784564
-     *
-     * @param $body_fragment
-     * @return string
-     */
+    * An HTML fragment is anything that can occur within a _body_ tag
+    * This method makes an HTML fragment a full HTML document
+    *
+    * We need to do this to avoid encoding issues.
+    * see https://github.com/technosophos/querypath/issues/94#issuecomment-8784564
+    *
+    * @param $body_fragment
+    * @return string
+    */
     protected function makeFragmentWhole($body_fragment)
     {
         $pre_html = '<!DOCTYPE html><html amp><head><meta charset="UTF-8"></head><body>';
@@ -251,10 +251,10 @@ class AMP
     }
 
     /**
-     * Provide a bare HTML document
-     * @param string
-     * @return string
-     */
+    * Provide a bare HTML document
+    * @param string
+    * @return string
+    */
     protected function bareDocument($insert)
     {
         $trimmed = trim($insert);
@@ -267,9 +267,9 @@ class AMP
     }
 
     /**
-     * @param string $html
-     * @return string
-     */
+    * @param string $html
+    * @return string
+    */
     protected function substituteStatisticsPlaceholders($html)
     {
         if ($this->context->getErrorScope() == Scope::BODY_SCOPE) {
@@ -309,15 +309,15 @@ class AMP
 
         $comment_start = " =AMP-STATS-HEADER= $scope_text processed by AMP PHP Library (https://github.com/Lullabot/amp-library) at $date =END-AMP-STATS-HEADER=";
         $comment_end = " =AMP-STATS-FOOTER=" . PHP_EOL
-            . "$scope_text processed by AMP PHP Library (https://github.com/Lullabot/amp-library) at $date" . PHP_EOL
-            . " Time Taken: $time_taken" . PHP_EOL
-            . " Number of html tags processed: $num_tags_processed" . PHP_EOL
-            . " PHP Peak memory usage before calling convertToAmpHtml: $start_memory_peak_str" . PHP_EOL
-            . " PHP Peak memory usage at the end of  convertToAmpHtml: $end_memory_peak_str $peak_change" . PHP_EOL
-            . " * Please note that time taken will increase significantly if you don't have opcache enabled or have XDEBUG enabled." . PHP_EOL
-            . "   Also note that the library downloads initial portions of images to determine dimensions for amp-img tags. " . PHP_EOL
-            . "   If your network is slow, your library processing time will increase and network download time may dominate total time taken for library processing." . PHP_EOL
-            . "=END-AMP-STATS-FOOTER=";
+        . "$scope_text processed by AMP PHP Library (https://github.com/Lullabot/amp-library) at $date" . PHP_EOL
+        . " Time Taken: $time_taken" . PHP_EOL
+        . " Number of html tags processed: $num_tags_processed" . PHP_EOL
+        . " PHP Peak memory usage before calling convertToAmpHtml: $start_memory_peak_str" . PHP_EOL
+        . " PHP Peak memory usage at the end of  convertToAmpHtml: $end_memory_peak_str $peak_change" . PHP_EOL
+        . " * Please note that time taken will increase significantly if you don't have opcache enabled or have XDEBUG enabled." . PHP_EOL
+        . "   Also note that the library downloads initial portions of images to determine dimensions for amp-img tags. " . PHP_EOL
+        . "   If your network is slow, your library processing time will increase and network download time may dominate total time taken for library processing." . PHP_EOL
+        . "=END-AMP-STATS-FOOTER=";
 
         $start_replaced = str_replace("#AMP-START-PLACEHOLDER-${stats_data['start_time']}#", $comment_start, $html);
         $end_replaced = str_replace("#AMP-END-PLACEHOLDER-${stats_data['start_time']}#", $comment_end, $start_replaced);
@@ -326,10 +326,10 @@ class AMP
     }
 
     /**
-     * @param $input_html
-     * @return string
-     * @throws \Exception
-     */
+    * @param $input_html
+    * @return string
+    * @throws \Exception
+    */
     protected function makeFullDocument($input_html)
     {
         /** @var QueryPath\DOMQuery $qp */
@@ -350,10 +350,10 @@ class AMP
     }
 
     /**
-     * @param $document_html
-     * @param bool $use_html5_parser
-     * @return DOMQuery
-     */
+    * @param $document_html
+    * @param bool $use_html5_parser
+    * @return DOMQuery
+    */
     protected function getDOMQuery($document_html, $use_html5_parser = true)
     {
         if ($use_html5_parser) {
@@ -369,8 +369,8 @@ class AMP
     }
 
     /**
-     * @param AMPHTML5 $amphtml
-     */
+    * @param AMPHTML5 $amphtml
+    */
     protected function addParsingErrors(AMPHTML5 $amphtml)
     {
         /** @var string[] $errors */
@@ -380,17 +380,17 @@ class AMP
             if (preg_match('/(*UTF8)Line(?:.*?)(\d+)(?:.*?)Col(?:.*?)(\d+)(?:.*?)Unexpected characters in attribute name: (.*)/i', $error_msg, $matches)) {
                 if (mb_strpos($matches[3], '{{', 0, 'UTF-8') !== false) {
                     $this->context->addError(ValidationErrorCode::TEMPLATE_IN_ATTR_NAME,
-                        [$matches[3], "at location line $matches[1], col $matches[2]"],
-                        $this->rules->template_spec_url, $this->validation_result);
+                    [$matches[3], "at location line $matches[1], col $matches[2]"],
+                    $this->rules->template_spec_url, $this->validation_result);
                 }
             }
         }
     }
 
     /**
-     * @param DOMQuery $qp
-     * @return null|string
-     */
+    * @param DOMQuery $qp
+    * @return null|string
+    */
     protected function getOutputHTML(DOMQuery $qp)
     {
         if ($this->scope == Scope::HTML_SCOPE) {
@@ -401,10 +401,10 @@ class AMP
     }
 
     /**
-     * Convert an HTML Fragment to AMP HTML
-     * @return string
-     * @throws \Exception
-     */
+    * Convert an HTML Fragment to AMP HTML
+    * @return string
+    * @throws \Exception
+    */
     public function convertToAmpHtml()
     {
         $document_html = $this->makeFullDocument($this->input_html);
@@ -440,9 +440,9 @@ class AMP
     }
 
     /**
-     * @param $document_html
-     * @return string
-     */
+    * @param $document_html
+    * @return string
+    */
     protected function addStatisticsIfEnabled($document_html)
     {
         if ($this->options['add_stats_html_comment']) {
@@ -480,12 +480,12 @@ class AMP
     }
 
     /**
-     * Quick and dirty way to format html
-     * Need this if the incoming html is to be diffed to the output html in any logical way
-     * @param $html
-     * @return string
-     * @throws \Exception
-     */
+    * Quick and dirty way to format html
+    * Need this if the incoming html is to be diffed to the output html in any logical way
+    * @param $html
+    * @return string
+    * @throws \Exception
+    */
     protected function formatSource($html)
     {
         $document_html = $this->makeFullDocument($html);
@@ -495,8 +495,8 @@ class AMP
     }
 
     /**
-     * @param DOMQuery $qp
-     */
+    * @param DOMQuery $qp
+    */
     protected function possiblyRemoveLinenumAttributes(DOMQuery $qp)
     {
         if (!empty($this->options['use_html5_parser'])) {
@@ -505,8 +505,8 @@ class AMP
     }
 
     /**
-     * @return string
-     */
+    * @return string
+    */
     protected function getValidationWarnings()
     {
         /** @var RenderValidationResult $render_validation_result */
@@ -516,12 +516,12 @@ class AMP
     }
 
     /**
-     * Use this instead of warningsHumanText() in case you want to call where html needs to be shown
-     * This method makes strings html friendly with special characters escaped e.g. "<" becomes "&lt;"
-     * Uses htmlspecialchars() function.
-     *
-     * @return string
-     */
+    * Use this instead of warningsHumanText() in case you want to call where html needs to be shown
+    * This method makes strings html friendly with special characters escaped e.g. "<" becomes "&lt;"
+    * Uses htmlspecialchars() function.
+    *
+    * @return string
+    */
     public function warningsHumanHtml()
     {
         return htmlspecialchars($this->warningsHumanText());
@@ -533,14 +533,14 @@ class AMP
     }
 
     /**
-     * Differs from AMP::warningsHuman() in that it outputs warnings in Text and not HTML format
-     *
-     * Use warningsHumanHtml() if you want the string to be html friendly with special characters escaped.
-     * e.g. "<" becomes "&lt;"
-     *
-     * @param bool $no_heading
-     * @return string
-     */
+    * Differs from AMP::warningsHuman() in that it outputs warnings in Text and not HTML format
+    *
+    * Use warningsHumanHtml() if you want the string to be html friendly with special characters escaped.
+    * e.g. "<" becomes "&lt;"
+    *
+    * @param bool $no_heading
+    * @return string
+    */
     public function warningsHumanText($no_heading = FALSE)
     {
         $warning_text = '';
@@ -567,17 +567,17 @@ class AMP
     }
 
     /**
-     * @param string $filename
-     * @param array $options
-     * @param bool $full_document
-     * @param bool $no_lines
-     * @param bool $diff
-     * @param bool $no_orig_and_warn
-     * @param bool $js
-     * @param bool $verbose
-     * @return string
-     * @throws \Exception
-     */
+    * @param string $filename
+    * @param array $options
+    * @param bool $full_document
+    * @param bool $no_lines
+    * @param bool $diff
+    * @param bool $no_orig_and_warn
+    * @param bool $js
+    * @param bool $verbose
+    * @return string
+    * @throws \Exception
+    */
     public function consoleOutput($filename = 'php://stdin', $options = [], $full_document = false, $js = false, $no_lines = false, $diff = false, $no_orig_and_warn = false, $verbose = false)
     {
         if ($verbose) {
@@ -599,7 +599,10 @@ class AMP
 
         $this->loadHtml($file_html, $options);
         $amp_html = $this->convertToAmpHtml();
-
+        $myfile = fopen("newfile.html", "w") or die("Unable to open file!");
+        $txt = $amp_html;
+        fwrite($myfile, $txt);
+        fclose($myfile);
         // original setting takes precedence
         $options += ['no_lines' => $no_lines];
         if (!$options['no_lines']) {
@@ -672,10 +675,10 @@ class AMP
     }
 
     /**
-     * @param $options_filename
-     * @return array|mixed
-     * @throws \Exception
-     */
+    * @param $options_filename
+    * @return array|mixed
+    * @throws \Exception
+    */
     public function getOptions($options_filename)
     {
         if (file_exists($options_filename)) {
@@ -691,10 +694,10 @@ class AMP
     }
 
     /**
-     * @param string $test_filename
-     * @return array|mixed
-     * @throws \Exception
-     */
+    * @param string $test_filename
+    * @return array|mixed
+    * @throws \Exception
+    */
     public function getOptionsFromStandardOptionFile($test_filename)
     {
         $options_filename = $test_filename . '.options.json';
